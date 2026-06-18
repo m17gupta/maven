@@ -3,6 +3,7 @@
 import { getPageData } from "@/lib/pageHelpers";
 import PageHero from "@/components/pages/PageHero";
 import HomeStudioIntro from "@/components/sections/home/HomeStudioIntro";
+import HomeDesignLeadership from "@/components/sections/home/HomeDesignLeadership";
 import HomeServices from "@/components/sections/home/HomeServices";
 import HomeProcess from "@/components/sections/home/HomeProcess";
 import HomeFeatureBanner from "@/components/sections/home/HomeFeatureBanner";
@@ -17,6 +18,18 @@ export default function ServicesPage() {
   // 1. Hero
   const heroSection = getSection("Services Hero");
   const heroProps = heroSection?.props ?? {};
+
+  // 3. Design Leadership
+  const leadershipSection = getSection("Design Leadership");
+  const leadershipProps = leadershipSection?.props ?? {};
+  const leadershipItems = getSectionItems("Design Leadership");
+  const leadershipData = leadershipSection ? {
+    title: t(leadershipProps.title)?.replace(/<[^>]*>/g, "") || "Honoring creativity, quality, and design leadership",
+    image: leadershipProps.image || "/assets/Image/project-image2.png",
+    points: leadershipItems.map((item: any) => ({
+      text: t(item.props?.text),
+    })),
+  } : null;
 
   // 6. Partners Logo Strip
   const partnersSection = getSection("Our Partners");
@@ -40,6 +53,8 @@ export default function ServicesPage() {
       />
       
       <HomeStudioIntro />
+      
+      {leadershipData && <HomeDesignLeadership title={leadershipData.title} points={leadershipData.points} image={leadershipData.image} />}
       
       <HomeServices />
       
